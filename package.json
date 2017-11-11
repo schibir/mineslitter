@@ -6,7 +6,7 @@
   "scripts": {
     "babel": "babel src -d dist",
     "browserify": "browserify dist/main.js -o dist/app.js",
-    "min": "uglifyjs -o dist/app.min.js dist/app.js",
+    "min": "uglifyjs -o build/app.min.js dist/app.js",
     "build": "npm run babel && npm run browserify && npm run min"
   },
   "repository": {
