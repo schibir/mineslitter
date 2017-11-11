@@ -6,8 +6,10 @@
   "scripts": {
     "babel": "babel src -d dist",
     "browserify": "browserify dist/main.js -o dist/app.js",
+    "browserify-dev": "browserify dist/main.js -o build/app.min.js",
     "min": "uglifyjs -o build/app.min.js dist/app.js",
     "build": "npm run babel && npm run browserify && npm run min",
+    "build-dev": "npm run babel && npm run browserify-dev",
     "publish": "git checkout gh-pages && git merge master && git push && git checkout master",
     "start": "http-server -p 8000 -c-1"
   },

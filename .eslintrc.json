@@ -20,6 +20,8 @@
         "arrow-parens": "off",
         "no-mixed-operators": "off",
         "function-paren-newline": "off",
-        "no-plusplus": "off"
+        "no-plusplus": "off",
+        "no-console": "off",
+        "no-bitwise": "off"
     }
 }

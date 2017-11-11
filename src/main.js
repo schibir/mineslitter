@@ -6,13 +6,14 @@ function main() {
     const context = canvas.getContext("2d");
     const mineslitter = new Mineslitter(context);
 
-    canvas.addEventListener("mouseup", (event) => {
-    }, false);
+    mineslitter.onsize = (width, height) => {
+        canvas.width = width;
+        canvas.height = height;
+    };
+
+    mineslitter.newGame(9, 9, 10);
 
     canvas.addEventListener("mousedown", (event) => {
-    }, false);
-
-    canvas.addEventListener("mousemove", (event) => {
     }, false);
 }
 document.addEventListener("DOMContentLoaded", main);
