@@ -7,7 +7,8 @@
     "babel": "babel src -d dist",
     "browserify": "browserify dist/main.js -o dist/app.js",
     "min": "uglifyjs -o build/app.min.js dist/app.js",
-    "build": "npm run babel && npm run browserify && npm run min"
+    "build": "npm run babel && npm run browserify && npm run min",
+    "publish": "git checkout gh-pages && git merge master && git push && git checkout master"
   },
   "repository": {
     "type": "git",
