@@ -1,3 +1,4 @@
 node_modules/
 dist/
 !dist/app.min.js
+.DS_Store
