@@ -12,9 +12,12 @@
   },
   "keywords": [
     "mineslitter",
-    "minesweeper"
+    "minesweeper",
+    "saper",
+    "mines",
+    "miner"
   ],
-  "author": "schibir",
+  "author": "Sergey Chibiryaev",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/schibir/Mineslitter/issues"
