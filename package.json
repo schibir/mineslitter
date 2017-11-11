@@ -9,7 +9,7 @@
     "min": "uglifyjs -o build/app.min.js dist/app.js",
     "build": "npm run babel && npm run browserify && npm run min",
     "publish": "git checkout gh-pages && git merge master && git push && git checkout master",
-    "start": "http-server -p 8000"
+    "start": "http-server -p 8000 -c-1"
   },
   "repository": {
     "type": "git",
