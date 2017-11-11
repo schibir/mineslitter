@@ -11,7 +11,22 @@ function main() {
         canvas.height = height;
     };
 
-    mineslitter.newGame(9, 9, 10);
+    const radioClick = (id) => {
+        const width = [9, 16, 30];
+        const height = [9, 16, 16];
+
+        const radio = document.getElementById(`mines${id}`);
+        const minesCount = parseInt(radio.labels[0].innerText, 10);
+        const sizeClass = id / 3 | 0;
+
+        mineslitter.newGame(width[sizeClass], height[sizeClass], minesCount);
+    };
+
+    radioClick(0);
+
+    for (let i = 0; i < 9; i++) {
+        document.getElementById(`mines${i}`).onclick = () => radioClick(i);
+    }
 
     canvas.addEventListener("mousedown", (event) => {
     }, false);
