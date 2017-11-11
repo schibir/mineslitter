@@ -18,7 +18,58 @@
 </head>
 <body>
     <div class="container">
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos voluptas non neque recusandae! Cum et, a, ullam cupiditate deserunt aliquam optio architecto molestiae in dicta impedit explicabo alias repellat doloremque!</p>
+        <div class="options">
+            <table class="table-options">
+                <tr>
+                    <th></th>
+                    <th>Easy</th>
+                    <th>Medium</th>
+                    <th>Hard</th>
+                </tr><tr>
+                    <td class="left-align">Beginner</td>
+                    <td><span>
+                        <input id="mines10" type="radio" name="radios" checked="checked">
+                        <label for="mines10">10</label>
+                    </span></td>
+                    <td><span>
+                        <input id="mines26" type="radio" name="radios">
+                        <label for="mines26">26</label>
+                    </span></td>
+                    <td><span>
+                        <input id="mines42" type="radio" name="radios">
+                        <label for="mines42">42</label>
+                    </span></td>
+                </tr><tr>
+                    <td class="left-align">Intermediate</td>
+                    <td><span>
+                        <input id="mines40" type="radio" name="radios">
+                        <label for="mines40">40</label>
+                    </span></td>
+                    <td><span>
+                        <input id="mines80" type="radio" name="radios">
+                        <label for="mines80">80</label>
+                    </span></td>
+                    <td><span>
+                        <input id="mines128" type="radio" name="radios">
+                        <label for="mines128">128</label>
+                    </span></td>
+                </tr><tr>
+                    <td class="left-align">Expert</td>
+                    <td><span>
+                        <input id="mines99" type="radio" name="radios">
+                        <label for="mines99">99</label>
+                    </span></td>
+                    <td><span>
+                        <input id="mines160" type="radio" name="radios">
+                        <label for="mines160">160</label>
+                    </span></td>
+                    <td><span>
+                        <input id="mines240" type="radio" name="radios">
+                        <label for="mines240">240</label>
+                    </span></td>
+                </tr>
+            </table>
+        </div>
         <div class="game-container">
             <canvas id="canvas" width="600" height="600"></canvas>
         </div>
