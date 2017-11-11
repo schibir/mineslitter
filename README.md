@@ -1,0 +1,2 @@
+# Mineslitter
+Minesweeper vice versa
