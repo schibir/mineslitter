@@ -4,7 +4,7 @@
   "description": "Minesweeper vice versa",
   "main": "dist/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src -d dist"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.2",
+    "babel-minify": "^0.2.0",
     "babel-preset-env": "^1.6.1",
     "eslint": "^4.11.0",
     "eslint-cli": "^1.1.1",
