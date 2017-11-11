@@ -8,7 +8,8 @@
     "browserify": "browserify dist/main.js -o dist/app.js",
     "min": "uglifyjs -o build/app.min.js dist/app.js",
     "build": "npm run babel && npm run browserify && npm run min",
-    "publish": "git checkout gh-pages && git merge master && git push && git checkout master"
+    "publish": "git checkout gh-pages && git merge master && git push && git checkout master",
+    "start": "http-server -p 8000"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "eslint-cli": "^1.1.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
+    "http-server": "^0.10.0",
     "uglify-js": "^3.1.8"
   }
 }
