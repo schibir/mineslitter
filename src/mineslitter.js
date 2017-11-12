@@ -9,14 +9,11 @@ class Tile {
 
     draw(ctx, img, scale) {
         const draw = (sx, sy) => {
-            ctx.drawImage(img, sx, sy, 16, 16,
+            ctx.drawImage(img, sx, sy, 48, 48,
                 12 + 16 * this.x * scale, 55 + 16 * this.y * scale, 16 * scale, 16 * scale);
         };
 
-        if (this.value === 0) draw(0, 0);
-        else if (this.value > 0 && this.value <= 8) {
-            draw(16 + 16 * ((this.value - 1) & 3), 16 * (this.value - 1 >> 2));
-        }
+        draw(48 * this.value, 0);
     }
 }
 
