@@ -1,10 +1,19 @@
 
 import Mineslitter from "./mineslitter";
 
+function isMobile() {
+    const isAndroid = () => navigator.userAgent.match(/Android/i);
+    const isBlackBerry = () => navigator.userAgent.match(/BlackBerry/i);
+    const isiOS = () => navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    const isOpera = () => navigator.userAgent.match(/Opera Mini/i);
+    const isWindows = () => navigator.userAgent.match(/IEMobile/i);
+    return isAndroid() || isiOS() || isBlackBerry() || isOpera() || isWindows();
+}
+
 function main() {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
-    const mineslitter = new Mineslitter(context);
+    const mineslitter = new Mineslitter(context, isMobile() ? 3 : 2);
 
     mineslitter.onsize = (width, height) => {
         canvas.width = width;

@@ -10,7 +10,7 @@ class Tile {
     draw(ctx, img, scale) {
         const draw = (sx, sy) => {
             ctx.drawImage(img, sx, sy, 16, 16,
-                (12 + 16 * this.x) * scale, (55 + 16 * this.y) * scale, 16 * scale, 16 * scale);
+                12 + 16 * this.x * scale, 55 + 16 * this.y * scale, 16 * scale, 16 * scale);
         };
 
         if (this.value === 0) draw(0, 0);
@@ -21,9 +21,9 @@ class Tile {
 }
 
 export default class Mineslitter {
-    constructor(context) {
+    constructor(context, scale) {
         this.context = context;
-        this.scale = 1.5;
+        this.scale = scale;
         this.onsize = () => {};
 
         this.img_skin = document.skin;
@@ -118,7 +118,7 @@ export default class Mineslitter {
     }
 
     drawSmile(state) {
-        this.drawRect(52 + 26 * state, 25, 26, 26, this.width * 8 - 1, 16, 26, 26);
+        this.drawRect(52 + 26 * state, 25, 26, 26, this.width * 8 * this.scale - 1, 16, 26, 26);
     }
 
     drawMinesLeft() {
@@ -128,12 +128,12 @@ export default class Mineslitter {
     drawTime() {
         const time = Date.now() - this.startTime;
         const sec = time / 1000 | 0;
-        this.drawNumber(sec, 12 + this.width * 16 - 4 - 40);
+        this.drawNumber(sec, 12 + this.width * 16 * this.scale - 4 - 40);
     }
 
     drawRect(sx, sy, swidth, sheight, dx, dy, dwidth, dheight) {
         this.context.drawImage(this.img_skin, sx, sy, swidth, sheight,
-            dx * this.scale, dy * this.scale, dwidth * this.scale, dheight * this.scale);
+            dx, dy, dwidth, dheight);
     }
 
     drawTile(tile) {
@@ -142,15 +142,18 @@ export default class Mineslitter {
 
     draw() {
         this.drawRect(0, 0, 12, 55, 0, 0, 12, 55);
-        this.drawRect(40, 0, 12, 55, this.width * 16 + 12, 0, 12, 55);
-        this.drawRect(12, 0, 20, 55, 12, 0, this.width * 16, 55);
-        this.drawRect(0, 72, 12, 12, 0, 55 + this.height * 16, 12, 12);
-        this.drawRect(20, 72, 12, 12, this.width * 16 + 12, 55 + this.height * 16, 12, 12);
-        this.drawRect(0, 56, 12, 10, 0, 55, 12, this.height * 16);
-        this.drawRect(12, 72, 8, 12, 12, 55 + this.height * 16, this.width * 16, 12);
-        this.drawRect(20, 64, 12, 8, this.width * 16 + 12, 55, 12, this.height * 16);
+        this.drawRect(40, 0, 12, 55, this.width * 16 * this.scale + 12, 0, 12, 55);
+        this.drawRect(12, 0, 20, 55, 12, 0, this.width * 16 * this.scale, 55);
+        this.drawRect(0, 72, 12, 12, 0, 55 + this.height * 16 * this.scale, 12, 12);
+        this.drawRect(20, 72, 12, 12, this.width * 16 * this.scale + 12,
+            55 + this.height * 16 * this.scale, 12, 12);
+        this.drawRect(0, 56, 12, 10, 0, 55, 12, this.height * 16 * this.scale);
+        this.drawRect(12, 72, 8, 12, 12, 55 + this.height * 16 * this.scale,
+            this.width * 16 * this.scale, 12);
+        this.drawRect(20, 64, 12, 8, this.width * 16 * this.scale + 12,
+            55, 12, this.height * 16 * this.scale);
         this.drawRect(52, 0, 41, 25, 16, 16, 41, 25);
-        this.drawRect(52, 0, 41, 25, 12 + this.width * 16 - 4 - 41, 16, 41, 25);
+        this.drawRect(52, 0, 41, 25, 12 + this.width * 16 * this.scale - 4 - 41, 16, 41, 25);
 
         this.tiles.forEach((tile) => this.drawTile(tile, false));
 
