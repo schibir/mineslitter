@@ -114,6 +114,7 @@ export default class Mineslitter {
                 this.adjacentTiles(tile, (next) => {
                     const ind = next.x + next.y * this.width;
                     this.tiles[ind].mine = true;
+                    this.mines_left--;
                 });
             }
         });
@@ -228,6 +229,7 @@ export default class Mineslitter {
             tile.mine = !tile.mine;
             if (tile.mine) this.mines_left--;
             else this.mines_left++;
+            this.drawMinesLeft();
             this.adjacentTiles(tile, (next) => this.drawTile(next));
             this.checkWin();
         }
