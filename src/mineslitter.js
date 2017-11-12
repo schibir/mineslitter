@@ -20,20 +20,22 @@ class Tile {
 export default class Mineslitter {
     constructor(context, scale) {
         this.context = context;
-        this.scale = scale;
+        this.myscale = scale;
         this.onsize = () => {};
 
         this.img_skin = document.skin;
         this.img_tiles = document.tiles;
     }
 
-    newGame(width, height, mines) {
+    newGame(width, height, mines, maxwidth) {
         this.stopGame();
         this.game_over = false;
         this.width = width;
         this.height = height;
         this.mines = mines;
         this.mines_left = this.mines;
+
+        this.scale = Math.min(this.myscale, (maxwidth - 24) / (this.width * 16));
 
         /* eslint-disable indent */
         this.onsize(this.width * 16 * this.scale + 24,

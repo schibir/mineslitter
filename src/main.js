@@ -13,6 +13,7 @@ function isMobile() {
 function main() {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
+    const gameContainer = document.querySelector(".game-container");
     const mineslitter = new Mineslitter(context, isMobile() ? 3 : 2);
 
     mineslitter.onsize = (width, height) => {
@@ -28,7 +29,7 @@ function main() {
         const minesCount = parseInt(radio.labels[0].innerText, 10);
         const sizeClass = id / 3 | 0;
 
-        mineslitter.newGame(width[sizeClass], height[sizeClass], minesCount);
+        mineslitter.newGame(width[sizeClass], height[sizeClass], minesCount, gameContainer.offsetWidth);
     };
 
     radioClick(0);
