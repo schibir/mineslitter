@@ -23,8 +23,7 @@ a:hover {
 }
 
 .container {
-    width: 800px;
-    margin: 0 auto;
+    text-align: center;
 }
 
 .game-container {
@@ -33,7 +32,7 @@ a:hover {
     cursor: default;
 }
 
-canvas {
+canvas, .table-options {
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;

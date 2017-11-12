@@ -39,8 +39,8 @@ export default class Mineslitter {
         this.mines_left = this.mines;
 
         /* eslint-disable indent */
-        this.onsize(this.width * 16 * this.scale + 24 * this.scale,
-                    this.height * 16 * this.scale + 67 * this.scale);
+        this.onsize(this.width * 16 * this.scale + 24,
+                    this.height * 16 * this.scale + 67);
         /* eslint-enable indent */
 
         this.startGame();
