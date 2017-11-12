@@ -218,7 +218,10 @@ export default class Mineslitter {
 
     mouseDown(x, y) {
         const smile = this.isSmile(x, y);
-        if (smile) this.drawSmile(1);
+        if (smile) {
+            this.drawSmile(1);
+            return;
+        }
         if (this.game_over) return;
         if (!smile) this.drawSmile(2);
 
