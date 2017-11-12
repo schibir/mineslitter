@@ -38,7 +38,12 @@ function main() {
         document.getElementById(`mines${i}`).onclick = () => radioClick(i);
     }
 
+    canvas.addEventListener("mouseup", (event) => {
+        mineslitter.mouseUp(event.offsetX, event.offsetY);
+    }, false);
+
     canvas.addEventListener("mousedown", (event) => {
+        mineslitter.mouseDown(event.offsetX, event.offsetY);
     }, false);
 }
 document.addEventListener("DOMContentLoaded", main);

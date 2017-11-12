@@ -7,13 +7,20 @@ class Tile {
         this.mine = false;
     }
 
-    draw(ctx, img, scale) {
+    draw(ctx, img, scale, count) {
         const draw = (sx, sy) => {
             ctx.drawImage(img, sx, sy, 48, 48,
                 12 + 16 * this.x * scale, 55 + 16 * this.y * scale, 16 * scale, 16 * scale);
         };
 
-        draw(48 * this.value, 0);
+        if (count === this.value) {
+            if (this.mine) draw(48 * 9, 0);
+            else draw(0, 0);
+        } else if (count < this.value) {
+            if (this.mine) draw(48 * this.value, 48);
+            else draw(48 * this.value, 0);
+        } else if (this.mine) draw(48 * 9, 96);
+        else draw(48 * this.value, 96);
     }
 }
 
@@ -32,6 +39,7 @@ export default class Mineslitter {
         this.game_over = false;
         this.width = width;
         this.height = height;
+        this.maxwidth = maxwidth;
         this.mines = mines;
         this.mines_left = this.mines;
 
@@ -97,6 +105,38 @@ export default class Mineslitter {
             const ind = tile.x + tile.y * this.width;
             this.tiles[ind].value = count;
         });
+
+        // check for complete mines
+        this.tiles.forEach((tile) => {
+            let count = 0;
+            this.adjacentTiles(tile, () => count++);
+            if (count === tile.value) {
+                this.adjacentTiles(tile, (next) => {
+                    const ind = next.x + next.y * this.width;
+                    this.tiles[ind].mine = true;
+                });
+            }
+        });
+    }
+
+    checkWin() {
+        let countProperlyTile = 0;
+        this.tiles.forEach((tile) => {
+            let count = 0;
+            this.adjacentTiles(tile, (next) => {
+                if (next.mine) count++;
+            });
+            if (count === tile.value) countProperlyTile++;
+        });
+        if (countProperlyTile === this.width * this.height) {
+            this.stopGame();
+            this.tiles.forEach((tile) => {
+                tile.draw(this.context, this.img_tiles, this.scale, tile.mine ? tile.value : 0);
+            });
+
+            this.game_over = true;
+            this.drawSmile(4);
+        }
     }
 
     /* Draw */
@@ -136,7 +176,11 @@ export default class Mineslitter {
     }
 
     drawTile(tile) {
-        tile.draw(this.context, this.img_tiles, this.scale);
+        let count = 0;
+        this.adjacentTiles(tile, (next) => {
+            if (next.mine) count++;
+        });
+        tile.draw(this.context, this.img_tiles, this.scale, count);
     }
 
     draw() {
@@ -158,6 +202,43 @@ export default class Mineslitter {
 
         this.drawMinesLeft();
         this.drawTime();
+        this.drawSmile(0);
+    }
+
+    // mouse
+
+    isSmile(x, y) {
+        const a1 = x > this.width * 8 * this.scale - 1;
+        const a2 = x < this.width * 8 * this.scale - 1 + 26;
+        const a3 = y > 16;
+        const a4 = y < 16 + 26;
+        return a1 && a2 && a3 && a4;
+    }
+
+    mouseDown(x, y) {
+        const smile = this.isSmile(x, y);
+        if (smile) this.drawSmile(1);
+        if (this.game_over) return;
+        if (!smile) this.drawSmile(2);
+
+        const indX = (x - 12) / (16 * this.scale) | 0;
+        const indY = (y - 55) / (16 * this.scale) | 0;
+        if (indX >= 0 && indX < this.width && indY >= 0 && indY < this.height) {
+            const tile = this.tiles[indX + indY * this.width | 0];
+            tile.mine = !tile.mine;
+            if (tile.mine) this.mines_left--;
+            else this.mines_left++;
+            this.adjacentTiles(tile, (next) => this.drawTile(next));
+            this.checkWin();
+        }
+    }
+
+    mouseUp(x, y) {
+        if (this.isSmile(x, y)) {
+            this.drawSmile(0);
+            this.newGame(this.width, this.height, this.mines, this.maxwidth);
+        }
+        if (this.game_over) return;
         this.drawSmile(0);
     }
 }
