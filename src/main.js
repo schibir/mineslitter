@@ -13,7 +13,7 @@ function isMobile() {
 function main() {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
-    const mineslitter = new Mineslitter(context, isMobile() ? 3 : 2);
+    const mineslitter = new Mineslitter(context, isMobile() ? 3 : 1.5);
 
     mineslitter.onsize = (width, height) => {
         canvas.width = width;
