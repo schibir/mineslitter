@@ -39,11 +39,13 @@ function main() {
     }
 
     if (isMobile()) {
-        canvas.addEventListener("touchend", (event) => {
-            mineslitter.mouseUp(event.changedTouches[0].pageX, event.changedTouches[0].pageY);
+        const offsetX = canvas.offsetParent.offsetLeft + canvas.offsetLeft;
+        const offsetY = canvas.offsetParent.offsetTop + canvas.offsetTop;
+        document.addEventListener("touchend", (event) => {
+            mineslitter.mouseUp(event.changedTouches[0].pageX - offsetX, event.changedTouches[0].pageY - offsetY);
         }, false);
-        canvas.addEventListener("touchstart", (event) => {
-            mineslitter.mouseDown(event.changedTouches[0].pageX, event.changedTouches[0].pageY);
+        document.addEventListener("touchstart", (event) => {
+            mineslitter.mouseDown(event.changedTouches[0].pageX - offsetX, event.changedTouches[0].pageY - offsetY);
         }, false);
     } else {
         canvas.addEventListener("mouseup", (event) => {
