@@ -209,11 +209,10 @@ export default class Mineslitter {
     // mouse
 
     isSmile(x, y) {
-        const a1 = x > this.width * 8 * this.scale - 1;
-        const a2 = x < this.width * 8 * this.scale - 1 + 26;
-        const a3 = y > 16;
-        const a4 = y < 16 + 26;
-        return a1 && a2 && a3 && a4;
+        return x > this.width * 8 * this.scale - 1 &&
+               x < this.width * 8 * this.scale - 1 + 26 &&
+               y > 16 &&
+               y < 16 + 26;
     }
 
     mouseDown(x, y) {
