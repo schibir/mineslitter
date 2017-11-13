@@ -229,12 +229,14 @@ export default class Mineslitter {
         const indY = (y - 55) / (16 * this.scale) | 0;
         if (indX >= 0 && indX < this.width && indY >= 0 && indY < this.height) {
             const tile = this.tiles[indX + indY * this.width | 0];
-            tile.mine = !tile.mine;
-            if (tile.mine) this.mines_left--;
-            else this.mines_left++;
-            this.drawMinesLeft();
-            this.adjacentTiles(tile, (next) => this.drawTile(next));
-            this.checkWin();
+            if (tile.value !== 9) {
+                tile.mine = !tile.mine;
+                if (tile.mine) this.mines_left--;
+                else this.mines_left++;
+                this.drawMinesLeft();
+                this.adjacentTiles(tile, (next) => this.drawTile(next));
+                this.checkWin();
+            }
         }
     }
 
