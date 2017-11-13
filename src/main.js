@@ -14,7 +14,15 @@ function main() {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
     const gameContainer = document.querySelector(".game-container");
-    const mineslitter = new Mineslitter(context, isMobile() ? 3 : 2);
+    const mobile = isMobile();
+    const mineslitter = new Mineslitter(context, mobile ? 3 : 2);
+
+    if (mobile) {
+        const rows = document.querySelectorAll(".hide-for-mobile");
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].style.display = "none";
+        }
+    }
 
     mineslitter.onsize = (width, height) => {
         canvas.width = width;
@@ -38,14 +46,16 @@ function main() {
         document.getElementById(`mines${i}`).onclick = () => radioClick(i);
     }
 
-    if (isMobile()) {
-        const offsetX = canvas.offsetParent.offsetLeft + canvas.offsetLeft;
-        const offsetY = canvas.offsetParent.offsetTop + canvas.offsetTop;
+    if (mobile) {
+        const offsetX = () => canvas.offsetParent.offsetLeft + canvas.offsetLeft;
+        const offsetY = () => canvas.offsetParent.offsetTop + canvas.offsetTop;
         document.addEventListener("touchend", (event) => {
-            mineslitter.mouseUp(event.changedTouches[0].pageX - offsetX, event.changedTouches[0].pageY - offsetY);
+            const { pageX, pageY } = event.changedTouches[0];
+            mineslitter.mouseUp(pageX - offsetX(), pageY - offsetY());
         }, false);
         document.addEventListener("touchstart", (event) => {
-            mineslitter.mouseDown(event.changedTouches[0].pageX - offsetX, event.changedTouches[0].pageY - offsetY);
+            const { pageX, pageY } = event.changedTouches[0];
+            mineslitter.mouseDown(pageX - offsetX(), pageY - offsetY());
         }, false);
     } else {
         canvas.addEventListener("mouseup", (event) => {
