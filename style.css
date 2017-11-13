@@ -32,7 +32,7 @@ a:hover {
     cursor: default;
 }
 
-canvas, .table-options {
+canvas, .table-options, .table-best {
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
@@ -90,4 +90,15 @@ input[type="text"] {
     border-radius: 3px;
     border: 1px solid #ccc;
     height: 24px;
+}
+
+.best-ceil {
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    color: 776e65;
+    border-radius: 3px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0);
+    font-weight: bold;
+    /* display: block; */
+    /* text-align: center; */
 }
