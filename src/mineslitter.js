@@ -29,6 +29,7 @@ export default class Mineslitter {
         this.context = context;
         this.myscale = scale;
         this.onsize = () => {};
+        this.onwin = () => {};
 
         this.img_skin = document.getElementById("skin");
         this.img_tiles = document.getElementById("tiles");
@@ -131,6 +132,7 @@ export default class Mineslitter {
         });
         if (countProperlyTile === this.width * this.height) {
             this.stopGame();
+            this.onwin(Date.now() - this.startTime);
             this.tiles.forEach((tile) => {
                 tile.draw(this.context, this.img_tiles, this.scale, tile.mine ? tile.value : 0);
             });

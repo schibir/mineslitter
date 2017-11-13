@@ -1,5 +1,6 @@
 
 import Mineslitter from "./mineslitter";
+import LocalStorage from "./localStorage";
 
 function isMobile() {
     const isAndroid = () => navigator.userAgent.match(/Android/i);
@@ -16,6 +17,8 @@ function main() {
     const gameContainer = document.querySelector(".game-container");
     const mobile = isMobile();
     const mineslitter = new Mineslitter(context, mobile ? 3 : 2);
+    const localStorage = new LocalStorage();
+    let currentGame = 0;
 
     if (mobile) {
         const rows = document.querySelectorAll(".hide-for-mobile");
@@ -29,6 +32,16 @@ function main() {
         canvas.height = height;
     };
 
+    const displayScore = (id) => {
+        const score = localStorage.getBestScore(id);
+        document.getElementById(`best${id}`).innerHTML = score ? score / 1000 : "-";
+    };
+
+    mineslitter.onwin = (score) => {
+        localStorage.setBestScore(currentGame, score);
+        displayScore(currentGame);
+    };
+
     const radioClick = (id) => {
         const width = [9, 16, 30];
         const height = [9, 16, 16];
@@ -38,12 +51,15 @@ function main() {
         const sizeClass = id / 3 | 0;
 
         mineslitter.newGame(width[sizeClass], height[sizeClass], minesCount, gameContainer.offsetWidth);
+
+        currentGame = id;
     };
 
     radioClick(0);
 
     for (let i = 0; i < 9; i++) {
         document.getElementById(`mines${i}`).onclick = () => radioClick(i);
+        displayScore(i);
     }
 
     if (mobile) {
