@@ -30,8 +30,8 @@ export default class Mineslitter {
         this.myscale = scale;
         this.onsize = () => {};
 
-        this.img_skin = document.skin;
-        this.img_tiles = document.tiles;
+        this.img_skin = document.getElementById("skin");
+        this.img_tiles = document.getElementById("tiles");
     }
 
     newGame(width, height, mines, maxwidth) {

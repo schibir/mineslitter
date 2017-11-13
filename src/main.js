@@ -38,12 +38,20 @@ function main() {
         document.getElementById(`mines${i}`).onclick = () => radioClick(i);
     }
 
-    canvas.addEventListener("mouseup", (event) => {
-        mineslitter.mouseUp(event.offsetX, event.offsetY);
-    }, false);
-
-    canvas.addEventListener("mousedown", (event) => {
-        mineslitter.mouseDown(event.offsetX, event.offsetY);
-    }, false);
+    if (isMobile()) {
+        canvas.addEventListener("touchend", (event) => {
+            mineslitter.mouseUp(event.changedTouches[0].pageX, event.changedTouches[0].pageY);
+        }, false);
+        canvas.addEventListener("touchstart", (event) => {
+            mineslitter.mouseDown(event.changedTouches[0].pageX, event.changedTouches[0].pageY);
+        }, false);
+    } else {
+        canvas.addEventListener("mouseup", (event) => {
+            mineslitter.mouseUp(event.offsetX, event.offsetY);
+        }, false);
+        canvas.addEventListener("mousedown", (event) => {
+            mineslitter.mouseDown(event.offsetX, event.offsetY);
+        }, false);
+    }
 }
-document.addEventListener("DOMContentLoaded", main);
+window.addEventListener("load", main);
