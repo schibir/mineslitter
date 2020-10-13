@@ -25,6 +25,8 @@ function main() {
         for (let i = 0; i < rows.length; i++) {
             rows[i].style.display = "none";
         }
+    } else {
+        document.querySelector(".empty_class").style.display = "none";
     }
 
     mineslitter.onsize = (width, height) => {
@@ -71,15 +73,17 @@ function main() {
         }, false);
         document.addEventListener("touchstart", (event) => {
             const { pageX, pageY } = event.changedTouches[0];
-            mineslitter.mouseDown(pageX - offsetX(), pageY - offsetY());
+            mineslitter.mouseDown(pageX - offsetX(), pageY - offsetY(), document.getElementById('empty_mode').checked ? 2 : 0);
         }, false);
     } else {
         canvas.addEventListener("mouseup", (event) => {
             mineslitter.mouseUp(event.offsetX, event.offsetY);
         }, false);
         canvas.addEventListener("mousedown", (event) => {
-            mineslitter.mouseDown(event.offsetX, event.offsetY);
+            mineslitter.mouseDown(event.offsetX, event.offsetY, event.button);
         }, false);
     }
+
+    canvas.oncontextmenu = (e) => { e.preventDefault(); e.stopPropagation(); }
 }
 window.addEventListener("load", main);

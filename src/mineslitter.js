@@ -5,22 +5,26 @@ class Tile {
         this.y = y;
         this.value = 0;
         this.mine = false;
+        this.empty = false;
     }
 
-    draw(ctx, img, scale, count) {
+    draw(ctx, img, scale, count, max_count, win) {
         const draw = (sx, sy) => {
             ctx.drawImage(img, sx, sy, 48, 48,
                 12 + 16 * this.x * scale, 55 + 16 * this.y * scale, 16 * scale, 16 * scale);
         };
 
         if (count === this.value) {
-            if (this.mine) draw(48 * 9, 0);
-            else draw(0, 0);
-        } else if (count < this.value) {
-            if (this.mine) draw(48 * this.value, 48);
+            if (this.mine) win ? draw(48 * 9, 48) : draw(48 * this.value, 48 * 2);
             else draw(48 * this.value, 0);
-        } else if (this.mine) draw(48 * 9, 96);
-        else draw(48 * this.value, 96);
+        } else if (count < this.value) {
+            if (this.mine) draw(48 * this.value, 48 * 2);
+            else if (this.empty) {
+                if (max_count >= this.value) draw(48 * this.value, 0);
+                else draw(48 * this.value, 48 * 3);
+            } else draw(48 * this.value, 48);
+        } else if (this.mine) draw(48 * 9, 48 * 3);
+        else draw(48 * this.value, 48 * 3);
     }
 }
 
@@ -121,20 +125,25 @@ export default class Mineslitter {
         });
     }
 
+    adjacentCount(tile) {
+        let count = 0;
+        this.adjacentTiles(tile, (next) => {
+            if (next.mine) count++;
+        });
+        return count;
+    }
+
     checkWin() {
         let countProperlyTile = 0;
         this.tiles.forEach((tile) => {
-            let count = 0;
-            this.adjacentTiles(tile, (next) => {
-                if (next.mine) count++;
-            });
+            let count = this.adjacentCount(tile);
             if (count === tile.value) countProperlyTile++;
         });
         if (countProperlyTile === this.width * this.height) {
             this.stopGame();
             this.onwin(Date.now() - this.startTime);
             this.tiles.forEach((tile) => {
-                tile.draw(this.context, this.img_tiles, this.scale, tile.mine ? tile.value : 0);
+                tile.draw(this.context, this.img_tiles, this.scale, tile.value, tile.value, true);
             });
 
             this.game_over = true;
@@ -179,11 +188,15 @@ export default class Mineslitter {
     }
 
     drawTile(tile) {
-        let count = 0;
+        let count = this.adjacentCount(tile);
+        let max_count = count;
         this.adjacentTiles(tile, (next) => {
-            if (next.mine) count++;
+            let next_count = this.adjacentCount(next);
+            if (next_count < next.value) {
+                if (!next.mine && !next.empty) max_count++;
+            }
         });
-        tile.draw(this.context, this.img_tiles, this.scale, count);
+        tile.draw(this.context, this.img_tiles, this.scale, count, max_count, false);
     }
 
     draw() {
@@ -201,7 +214,7 @@ export default class Mineslitter {
         this.drawRect(52, 0, 41, 25, 16, 16, 41, 25);
         this.drawRect(52, 0, 41, 25, 12 + this.width * 16 * this.scale - 4 - 41, 16, 41, 25);
 
-        this.tiles.forEach((tile) => this.drawTile(tile, false));
+        this.tiles.forEach((tile) => this.drawTile(tile));
 
         this.drawMinesLeft();
         this.drawTime();
@@ -217,7 +230,7 @@ export default class Mineslitter {
                y < 16 + 26;
     }
 
-    mouseDown(x, y) {
+    mouseDown(x, y, button) {
         const smile = this.isSmile(x, y);
         if (smile) {
             this.drawSmile(1);
@@ -226,16 +239,21 @@ export default class Mineslitter {
         if (this.game_over) return;
         if (!smile) this.drawSmile(2);
 
-        const indX = (x - 12) / (16 * this.scale) | 0;
-        const indY = (y - 55) / (16 * this.scale) | 0;
-        if (indX >= 0 && indX < this.width && indY >= 0 && indY < this.height) {
+        const floatX = (x - 12) / (16 * this.scale);
+        const floatY = (y - 55) / (16 * this.scale);
+        if (floatX >= 0 && floatX < this.width && floatY >= 0 && floatY < this.height) {
+            const indX = floatX | 0;
+            const indY = floatY | 0;
             const tile = this.tiles[indX + indY * this.width | 0];
             if (tile.value !== 9) {
-                tile.mine = !tile.mine;
-                if (tile.mine) this.mines_left--;
-                else this.mines_left++;
-                this.drawMinesLeft();
-                this.adjacentTiles(tile, (next) => this.drawTile(next));
+                if (button === 0) {
+                    tile.mine = !tile.mine;
+                    if (tile.mine) this.mines_left--;
+                    else this.mines_left++;
+                    this.drawMinesLeft();
+                } else if (button === 2) tile.empty = !tile.empty;
+                else return;
+                this.tiles.forEach((tile) => this.drawTile(tile));
                 this.checkWin();
             }
         }

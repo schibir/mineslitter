@@ -21,12 +21,12 @@
         <div class="options">
             <table class="table-options">
                 <tr>
-                    <th></th>
+                    <th class="hide-for-mobile"></th>
                     <th>Easy</th>
                     <th>Medium</th>
                     <th>Hard</th>
                 </tr><tr>
-                    <td class="left-align">Beginner</td>
+                    <td class="left-align hide-for-mobile">Beginner</td>
                     <td><span>
                         <input id="mines0" type="radio" name="radios" checked="checked">
                         <label for="mines0">10</label>
@@ -73,8 +73,12 @@
         <div class="game-container">
             <canvas id="canvas" width="600" height="600"></canvas>
         </div>
+        <div class="empty_class">
+            <input id="empty_mode" type="checkbox" name="check_empty">
+            <label for="empty_mode">Mark as empty</label>
+        </div>
         <div class="best">
-            <h1>Best</h1>
+            <h4>Best</h4>
             <table class="table-best">
                 <tr>
                     <td class="best-ceil" id="best0">-</td>

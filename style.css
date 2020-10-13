@@ -7,10 +7,6 @@ html, body {
     padding: 0;
 }
 
-body {
-    margin: 16px;
-}
-
 a {
     color: #aabbff;
     text-decoration: none;
@@ -26,13 +22,18 @@ a:hover {
     text-align: center;
 }
 
+.options {
+    margin: 10px;
+}
+
 .game-container {
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     position: relative;
     cursor: default;
 }
 
-canvas, .table-options, .table-best {
+canvas, .table-options, .table-best, .empty_class {
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
@@ -83,6 +84,39 @@ input[type="radio"]:checked + label {
     color: white;
 }
 
+.empty_class {
+    text-align: center;
+    width: 160px;
+}
+
+input[type="checkbox"] {
+    /* hide the inputs */
+    display: none;
+}
+
+/* style your lables/button */
+input[type="checkbox"] + label {
+    /* keep pointer so that you get the little hand showing when you are on a button */
+    cursor: pointer;
+    /* the following are the styles */
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    background: #faf8ef;
+    color: rgb(56, 56, 56);
+    border-radius: 3px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0);
+    display: block;
+    text-align: center;
+}
+
+input[type="checkbox"]:checked + label {
+    /* style for the checked/selected state */
+    background: #777;
+    border: 1px solid #444;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+    color: white;
+}
+
 input[type="text"] {
     font: normal normal 15px Verdana, Geneva, Arial, Helvetica, sans-serif;
     text-align: center;
@@ -95,10 +129,10 @@ input[type="text"] {
 .best-ceil {
     padding: 4px 10px;
     border: 1px solid #ccc;
-    color: 776e65;
-    border-radius: 3px;
+    background: #777;
+    color: #faf8ef;
+    border-radius: 5px;
     text-shadow: 1px 1px 0 rgba(0,0,0,0);
-    font-weight: bold;
     /* display: block; */
     /* text-align: center; */
 }
