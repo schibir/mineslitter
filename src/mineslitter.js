@@ -246,12 +246,19 @@ export default class Mineslitter {
             const indY = floatY | 0;
             const tile = this.tiles[indX + indY * this.width | 0];
             if (tile.value !== 9) {
-                if (button === 0) {
-                    tile.mine = !tile.mine;
-                    if (tile.mine) this.mines_left--;
-                    else this.mines_left++;
+                if (button === 2) {
+                    if (!tile.mine) this.mines_left--;
+                    tile.mine = true;
                     this.drawMinesLeft();
-                } else if (button === 2) tile.empty = !tile.empty;
+                } else if (button === 0) tile.empty = true;
+                else if (button === 1) {
+                    let count = this.adjacentCount(tile);
+                    if (count === tile.value) {
+                        this.adjacentTiles(tile, (next) => {
+                            if (!next.mine) next.empty = true;
+                        });
+                    }
+                }
                 else return;
                 this.tiles.forEach((tile) => this.drawTile(tile));
                 this.checkWin();
