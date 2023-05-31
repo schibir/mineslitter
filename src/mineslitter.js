@@ -112,17 +112,15 @@ export default class Mineslitter {
         });
 
         // check for complete mines
+        let hasCompleteTiles = false;
         this.tiles.forEach((tile) => {
             let count = 0;
             this.adjacentTiles(tile, () => count++);
             if (count === tile.value) {
-                this.adjacentTiles(tile, (next) => {
-                    const ind = next.x + next.y * this.width;
-                    this.tiles[ind].mine = true;
-                    this.mines_left--;
-                });
+                hasCompleteTiles = true;
             }
         });
+        if (hasCompleteTiles) this.generate();
     }
 
     adjacentCount(tile) {
@@ -247,10 +245,11 @@ export default class Mineslitter {
             const tile = this.tiles[indX + indY * this.width | 0];
             if (tile.value !== 9) {
                 if (button === 2) {
-                    if (!tile.mine) this.mines_left--;
-                    tile.mine = true;
+                    tile.mine = !tile.mine;
+                    if (tile.mine) this.mines_left--;
+                    else this.mines_left++;
                     this.drawMinesLeft();
-                } else if (button === 0) tile.empty = true;
+                } else if (button === 0) tile.empty = !tile.empty;
                 else if (button === 1) {
                     let count = this.adjacentCount(tile);
                     if (count === tile.value) {
