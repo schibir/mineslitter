@@ -73,7 +73,7 @@ function main() {
         }, false);
         document.addEventListener("touchstart", (event) => {
             const { pageX, pageY } = event.changedTouches[0];
-            mineslitter.mouseDown(pageX - offsetX(), pageY - offsetY(), document.getElementById('empty_mode').checked ? 2 : 0);
+            mineslitter.mouseDown(pageX - offsetX(), pageY - offsetY(), document.getElementById('empty_mode').checked ? 0 : 2);
         }, false);
     } else {
         canvas.addEventListener("mouseup", (event) => {
