@@ -9,8 +9,8 @@ Minesweeper vice versa. You need to mine the board using numbers that mean how m
 Play it here https://schibir.github.io/mineslitter/
 
 #### Controls
-* Left mouse button - puts a mine
-* Right mouse button - marks the cell as empty
+* Right mouse button - puts a mine
+* Left mouse button - marks the cell as empty
 * Middle mouse button - marks adjacent cells as empty, if the pressed cell is
 
 #### Build
